@@ -1,0 +1,7 @@
+name: "user"
+host: "127.0.0.1"
+prot: 9701
+user-server:
+  host: "127.0.0.1"
+  port: 9801
+  name: "grpc-user-server"
