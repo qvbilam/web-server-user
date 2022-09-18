@@ -5,7 +5,14 @@ type ServerConfig struct {
 	Host             string           `mapstructure:"host" json:"host"`
 	Port             string           `mapstructure:"port" json:"port"`
 	Tags             []string         `mapstructure:"tags" json:"tags"`
+	JWTConfig        JWTConfig        `mapstructure:"jwt" json:"jwt"`
 	UserServerConfig UserServerConfig `mapstructure:"user-server" json:"user-server"`
+}
+
+type JWTConfig struct {
+	Issuer     string `mapstructure:"issuer" json:"issuer"`
+	Expire     int64  `mapstructure:"expire" json:"expire"`
+	SigningKey string `mapstructure:"key" json:"signingKey"`
 }
 
 type UserServerConfig struct {

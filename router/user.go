@@ -3,14 +3,25 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"user/api"
+	"user/middleware"
 )
 
 func InitUserRouter(Router *gin.RouterGroup) {
-	VideoRouter := Router.Group("user")
+	ServerRouter := Router.Group("user")
 	{
-		VideoRouter.GET("", api.List)
-		VideoRouter.GET("/:id", api.Detail)
-		VideoRouter.POST("", api.Create)
-		VideoRouter.PUT("/:id", api.Update)
+		userAuthRouter := ServerRouter.Group("").Use(middleware.Cors()).Use(middleware.Auth())
+		{
+			userAuthRouter.GET("", api.Search) // todo
+			userAuthRouter.GET("/search", api.Search)
+			userAuthRouter.GET("/:id", api.Detail)
+			userAuthRouter.PUT("/:id", api.Update)
+			userAuthRouter.POST("/logout", api.Logout)
+		}
+
+		userRouter := ServerRouter.Group("").Use(middleware.Cors())
+		{
+			userRouter.POST("/register", api.Register)
+			userRouter.POST("/login", api.Login)
+		}
 	}
 }

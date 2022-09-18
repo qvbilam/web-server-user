@@ -19,4 +19,7 @@ go get -u github.com/grpc-ecosystem/go-grpc-middleware
 
 # validate 表单验证
 go get -u github.com/gin-gonic/gin/binding
+
+# jwt
+go get -u github.com/dgrijalva/jwt-go
 ```

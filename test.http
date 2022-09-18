@@ -1,0 +1,20 @@
+### 用户登陆
+POST http://localhost:9702/user/login
+Content-Type: application/json
+
+{
+  "mobile": "13501294166",
+  "password": "123456",
+  "type": 1
+}
+
+> {% client.global.set("token", response.body.token) %}
+
+### 获取用户详情
+GET http://localhost:9702/user/1
+Authorization: Bearer {{token}}
+
+
+### 搜索用户
+GET http://localhost:9702/user/search?keyword=Fate
+Authorization: Bearer {{token}}
