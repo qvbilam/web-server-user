@@ -57,6 +57,7 @@ func Login(ctx *gin.Context) {
 	})
 
 	if err != nil {
+		HandleGrpcErrorToHttp(ctx, err)
 		return
 	}
 
