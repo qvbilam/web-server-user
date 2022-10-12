@@ -42,7 +42,7 @@ func main() {
 
 	Name := global.ServerConfig.Name
 	Host := "0.0.0.0"
-	Port := 9702
+	Port := 9701
 
 	// 启动服务
 	go func() {
