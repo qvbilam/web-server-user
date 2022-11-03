@@ -13,7 +13,7 @@ import (
 
 func Register(ctx *gin.Context) {
 	request := validate.CreateValidate{}
-	if err := ctx.BindQuery(&request); err != nil {
+	if err := ctx.Bind(&request); err != nil {
 		api.HandleValidateError(ctx, err)
 		return
 	}

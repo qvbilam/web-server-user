@@ -1,20 +1,20 @@
 ### 用户注册
-POST http://localhost:9701/account/register
+POST http://localhost:9501/account/register
 Content-Type: application/json
 
 {
-  "mobile": 13501294166,
-  "password": 123456
+  "mobile": "13501294164",
+  "password": "123456"
 }
 
 ### 用户登陆
-POST http://localhost:9701/account/login
+POST http://localhost:9501/account/login
 Content-Type: application/json
 
 {
-  "mobile": "13501284164",
+  "mobile": "13501294164",
   "password": "123456",
-  "type": 1
+  "method": "mobile"
 }
 
 > {% client.global.set("token", response.body.token) %}
