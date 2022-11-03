@@ -1,7 +1,6 @@
 package initialize
 
 import (
-	"context"
 	"fmt"
 	retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	"go.uber.org/zap"
@@ -56,10 +55,8 @@ func (s *serverClientConfig) initUserServer() {
 	}
 
 	userClient := proto.NewUserClient(conn)
+	accountClient := proto.NewAccountClient(conn)
+
 	global.UserServerClient = userClient
-	u, err := global.UserServerClient.Detail(context.Background(), &proto.GetUserRequest{Id: 1})
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(u)
+	global.AccountServerClient = accountClient
 }

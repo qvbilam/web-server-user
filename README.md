@@ -22,4 +22,7 @@ go get -u github.com/gin-gonic/gin/binding
 
 # jwt
 go get -u github.com/dgrijalva/jwt-go
+
+# client ip
+go get -u github.com/thinkeridea/go-extend/exnet
 ```

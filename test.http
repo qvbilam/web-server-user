@@ -1,5 +1,14 @@
+### 用户注册
+POST http://localhost:9701/account/register
+Content-Type: application/json
+
+{
+  "mobile": 13501294166,
+  "password": 123456
+}
+
 ### 用户登陆
-POST http://localhost:9702/user/login
+POST http://localhost:9701/account/login
 Content-Type: application/json
 
 {

@@ -10,5 +10,6 @@ var (
 	Trans        ut.Translator // 表单验证
 	ServerConfig *config.ServerConfig
 
-	UserServerClient proto.UserClient
+	UserServerClient    proto.UserClient
+	AccountServerClient proto.AccountClient
 )

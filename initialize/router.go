@@ -19,6 +19,7 @@ func InitRouters() *gin.Engine {
 
 	// 初始化基础组建路由
 	userRouter.InitUserRouter(apiRouter)
+	userRouter.InitAccountRouter(apiRouter)
 
 	return router
 }

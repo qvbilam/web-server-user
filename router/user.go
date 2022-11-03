@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"user/api"
+	"user/api/user"
 	"user/middleware"
 )
 
@@ -11,17 +11,11 @@ func InitUserRouter(Router *gin.RouterGroup) {
 	{
 		userAuthRouter := ServerRouter.Group("").Use(middleware.Cors()).Use(middleware.Auth())
 		{
-			userAuthRouter.GET("", api.Search) // todo
-			userAuthRouter.GET("/search", api.Search)
-			userAuthRouter.GET("/:id", api.Detail)
-			userAuthRouter.PUT("/:id", api.Update)
-			userAuthRouter.POST("/logout", api.Logout)
-		}
+			userAuthRouter.GET("", user.Search) // todo
+			userAuthRouter.GET("/search", user.Search)
+			userAuthRouter.GET("/:id", user.Detail)
+			userAuthRouter.PUT("/:id", user.Update)
 
-		userRouter := ServerRouter.Group("").Use(middleware.Cors())
-		{
-			userRouter.POST("/register", api.Register)
-			userRouter.POST("/login", api.Login)
 		}
 	}
 }
