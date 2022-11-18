@@ -12,6 +12,7 @@ RUN go env -w GO111MODULE=on \
 # 重制作镜像-通过dockerhub可查看golang1.18-alpine对应的alpine版本
 FROM alpine:3.15
 COPY --from=go-alpine-builder /go/bin/user /bin/user
+ENV PORT=9501
 
 # 暴露端口
 EXPOSE 9501

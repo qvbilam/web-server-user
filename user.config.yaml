@@ -1,14 +1,20 @@
 apiVersion: "v1"
 kind: ConfigMap
 metadata:
-  name: file
+  name: user-web
   labels:
-    app: file
+    app: user-web
 data:
-  server_name: oss-web-server
-  oss_key: LTAI5tGH3YwADGhBCyB3Cg3s
-  oss_secrect: db9ieC5otI7oye6XlqGr2xPRQfe7sC
-  oss_host: https://qvbilam.oss-cn-hangzhou.aliyuncs.com
-  oss_callback_url: http://nn4fhx.natappfree.cc/v1/callback
-  oss_upload_dir: user-images/
-  oss_expire_time: "300"
+  # 服务配置
+  server_name: user-web-server
+  server_host: 0.0.0.0
+
+  # jwt 配置
+  jwt_key: Ep<4Iy#2Im~4Ab^8Px;6Oj.5Hi^8Yh)6
+  jwt_expire: "86400"
+  jwt_issuer: qvbilam-user
+
+  # user-server 配置
+  user-server_name: user-server
+  user-server_host: user-server
+  user-server_port: "9801"

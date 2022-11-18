@@ -1,63 +1,71 @@
+# user.deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: file-web-server
+  name: user-web-server
   labels:
-    app: file-web-server
+    app: user-web-server
 spec:
   replicas: 1
   strategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      app: file-web-server
+      app: user-web-server
   template:
     metadata:
       labels:
-        app: file-web-server
+        app: user-web-server
     spec:
       containers:
-        - name: file-web-server
-          image: registry.cn-hangzhou.aliyuncs.com/qvbilam/file-web:1.0.0
+        - name: user-server
+          image: registry.cn-hangzhou.aliyuncs.com/qvbilam/user-web-server:1.0.0
           imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 9701
+          ports: # 容器内部使用端口
+            - containerPort: 9501
           env:
+            # 服务配置
             - name: SERVER_NAME
               valueFrom:
                 configMapKeyRef:
                   key: server_name
-                  name: file
-            - name: OSS_KEY
+                  name: user-web
+
+            # jwt 配置
+            - name: JWT_KEY
               valueFrom:
                 configMapKeyRef:
-                  key: oss_key
-                  name: file
-            - name: OSS_SECRECT
+                  key: jwt_key
+                  name: user-web
+            - name: JWT_EXPIRE
               valueFrom:
                 configMapKeyRef:
-                  key: oss_secrect
-                  name: file
-            - name: OSS_HOST
+                  key: jwt_expire
+                  name: user-web
+            - name: JWT_ISSUER
               valueFrom:
                 configMapKeyRef:
-                  key: oss_host
-                  name: file
-            - name: OSS_CALLBACK_URL
+                  key: jwt_issuer
+                  name: user-web
+
+            # user-server 配置
+            - name: USER-SERVER_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: oss_callback_url
-                  name: file
-            - name: OSS_UPLOAD_DIR
+                  key: user-server_host
+                  name: user-web
+            - name: USER-SERVER_PORT
               valueFrom:
                 configMapKeyRef:
-                  key: oss_upload_dir
-                  name: file
-            - name: OSS_EXPIRE_TIME
+                  key: user-server_port
+                  name: user-web
+            - name: USER-SERVER_NAME
               valueFrom:
                 configMapKeyRef:
-                  key: oss_expire_time
-                  name: file
+                  key: user-server_name
+                  name: user-web
+
+
           resources:
             limits:
               cpu: 100m

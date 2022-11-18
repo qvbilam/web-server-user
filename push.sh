@@ -3,7 +3,7 @@
 
 tag=$1
 imageName=qvbilam/user-web-server-alpine
-originImageName=registry.cn-hangzhou.aliyuncs.com/qvbilam/user-web
+originImageName=registry.cn-hangzhou.aliyuncs.com/qvbilam/user-web-server
 
 # build image
 docker build -t ${imageName} .
