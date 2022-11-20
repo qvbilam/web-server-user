@@ -20,7 +20,7 @@ spec:
       containers:
         - name: user-server
           image: registry.cn-hangzhou.aliyuncs.com/qvbilam/user-web-server:1.0.0
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports: # 容器内部使用端口
             - containerPort: 9501
           env:

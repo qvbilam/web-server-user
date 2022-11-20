@@ -8,4 +8,4 @@ spec:
   ports:
     - protocol: TCP
       port: 9701
-  type: LoadBalancer
+  type: NodePort

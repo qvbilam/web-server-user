@@ -8,7 +8,7 @@ import (
 
 var (
 	Trans        ut.Translator // 表单验证
-	ServerConfig *config.ServerConfig
+	ServerConfig config.ServerConfig
 
 	UserServerClient    proto.UserClient
 	AccountServerClient proto.AccountClient
