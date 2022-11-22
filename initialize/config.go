@@ -6,6 +6,7 @@ import (
 	"go.uber.org/zap"
 	"os"
 	"strconv"
+	"user/config"
 	"user/global"
 )
 
@@ -18,6 +19,10 @@ func initEnvConfig() {
 	serverPort, _ := strconv.Atoi(os.Getenv("PORT"))
 	jwtExpire, _ := strconv.Atoi(os.Getenv("JWT_EXPIRE"))
 	userServerPort, _ := strconv.Atoi(os.Getenv("USER-SERVER_PORT"))
+
+	if global.ServerConfig == nil {
+		global.ServerConfig = &config.ServerConfig{}
+	}
 
 	global.ServerConfig.Name = os.Getenv("SERVER_NAME")
 	global.ServerConfig.Host = "0.0.0.0"
