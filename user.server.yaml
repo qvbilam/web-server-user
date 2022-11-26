@@ -6,6 +6,8 @@ spec:
   selector:
     app: user-web-server
   ports:
-    - protocol: TCP
+    - name: http-user-web-sever
+      protocol: TCP
       port: 9701
+      targetPort: 9501
   type: NodePort
