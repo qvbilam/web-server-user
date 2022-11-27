@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ### 用户登陆
-POST http://localhost:9701/account/login
+POST http://localhost:9700/account/login
 Content-Type: application/json
 
 {
@@ -20,7 +20,7 @@ Content-Type: application/json
 > {% client.global.set("token", response.body.data.token) %}
 
 ### 获取用户详情
-GET http://localhost:9501/user/1
+GET http://localhost:9700/user/1
 Authorization: Bearer {{token}}
 
 
