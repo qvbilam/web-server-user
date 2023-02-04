@@ -1,6 +1,6 @@
 name: "user"
 host: "0.0.0.0"
-port: 9501
+port: 9701
 
 jwt:
   key: "Ep<4Iy#2Im~4Ab^8Px;6Oj.5Hi^8Yh)6"
