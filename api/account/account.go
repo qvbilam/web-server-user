@@ -64,7 +64,7 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	token := api.GenerateUserToken(entity.User)
+	token := entity.Token
 
 	r := resource.LoginResource{}
 	api.SuccessNotMessage(ctx, r.Resource(entity, token))

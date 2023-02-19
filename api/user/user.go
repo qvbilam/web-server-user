@@ -3,12 +3,12 @@ package user
 import (
 	"context"
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"strconv"
 	"user/api"
 	pageProto "user/api/qvbilam/page/v1"
 	proto "user/api/qvbilam/user/v1"
 	"user/global"
+	"user/resource"
 	"user/validate"
 )
 
@@ -29,16 +29,8 @@ func Detail(ctx *gin.Context) {
 		return
 	}
 
-	//u, _ := ctx.Get("user")
-	//model := u.(*AuthJWT.CustomClaims)
-	//model.Id
-
-	ctx.JSON(http.StatusOK, gin.H{
-		"id":       entity.Id,
-		"code":     entity.Code,
-		"nickname": entity.Nickname,
-		"avatar":   entity.Avatar,
-	})
+	res := resource.UserResource{}
+	api.SuccessNotMessage(ctx, res.Resource(entity))
 }
 
 func Search(ctx *gin.Context) {
@@ -82,12 +74,8 @@ func Search(ctx *gin.Context) {
 		})
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"total":    res.Total,
-		"data":     users,
-		"page":     request.Page,
-		"per_page": request.PerPage,
-	})
+	usersResource := resource.UsersResource{}
+	api.SuccessNotMessage(ctx, usersResource.Resource(res))
 }
 
 func Delete(ctx *gin.Context) {
