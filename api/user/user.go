@@ -13,6 +13,30 @@ import (
 )
 
 func Update(ctx *gin.Context) {
+	uID, _ := ctx.Get("userId")
+	userID := uID.(int64)
+
+	request := validate.UpdateValidate{}
+	if err := ctx.ShouldBind(&request); err != nil {
+		api.HandleValidateError(ctx, err)
+		return
+	}
+
+	client := global.UserServerClient
+
+	_, err := client.Update(context.Background(), &proto.UpdateRequest{
+		Id:       userID,
+		Nickname: request.Nickname,
+		Gender:   request.Gender,
+		Avatar:   request.Avatar,
+	})
+
+	if err != nil {
+		api.HandleValidateError(ctx, err)
+		return
+	}
+
+	api.SuccessNotContent(ctx)
 }
 
 func Detail(ctx *gin.Context) {

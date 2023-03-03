@@ -14,7 +14,7 @@ func InitUserRouter(Router *gin.RouterGroup) {
 			userAuthRouter.GET("", user.Search) // todo
 			userAuthRouter.GET("/search", user.Search)
 			userAuthRouter.GET("/:id", user.Detail)
-			userAuthRouter.PUT("/:id", user.Update)
+			userAuthRouter.PUT("", user.Update)
 
 		}
 	}
