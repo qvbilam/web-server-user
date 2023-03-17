@@ -3,7 +3,7 @@ host: "0.0.0.0"
 port: 9701
 
 jwt:
-  key: "Ep<4Iy#2Im~4Ab^8Px;6Oj.5Hi^8Yh)6"
+  key: ""
   expire: 86400
   issuer: "qvbilam-user"
 
