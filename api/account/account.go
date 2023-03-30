@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/gin-gonic/gin"
 	"user/api"
+	publicProto "user/api/qvbilam/public/v1"
 	proto "user/api/qvbilam/user/v1"
 	"user/enum"
 	"user/global"
@@ -46,6 +47,16 @@ func Login(ctx *gin.Context) {
 
 	var entity *proto.AccountResponse
 	var err error
+
+	deviceName, _ := ctx.Get("deviceName")
+	deviceVersion, _ := ctx.Get("deviceVersion")
+	deviceOS, _ := ctx.Get("deviceOS")
+	device := proto.DeviceRequest{
+		Version: deviceVersion.(string),
+		Client:  deviceName.(string),
+		Device:  deviceOS.(string),
+	}
+
 	if _, ok := passwordMethod[request.Method]; ok {
 		entity, err = global.AccountServerClient.LoginPassword(context.Background(), &proto.LoginPasswordRequest{
 			Method:   request.Method,
@@ -54,13 +65,31 @@ func Login(ctx *gin.Context) {
 			Email:    request.Email,
 			Password: request.Password,
 			Ip:       api.GetClientIP(ctx),
+			Device:   &device,
 		})
-		if err != nil {
+	} else if request.Method == enum.LoginMethodSms {
+		// 验证验证码
+		if _, err := global.PublicSmsServerClient.CheckLogin(context.Background(), &publicProto.CheckSmsRequest{
+			Mobile: request.Mobile,
+			Code:   request.Code,
+		}); err != nil {
 			api.HandleGrpcErrorToHttp(ctx, err)
 			return
 		}
+
+		// 验证码登陆
+		entity, err = global.AccountServerClient.LoginMobile(context.Background(), &proto.LoginMobileRequest{
+			Mobile: request.Mobile,
+			Ip:     api.GetClientIP(ctx),
+			Device: &device,
+		})
 	} else {
 		api.ErrorUnprocessableEntity(ctx, gin.H{"method": "Unprocessable method"})
+		return
+	}
+
+	if err != nil {
+		api.HandleGrpcErrorToHttp(ctx, err)
 		return
 	}
 

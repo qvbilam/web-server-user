@@ -1,0 +1,31 @@
+syntax = "proto3";
+package publicPb.v1;
+import "google/protobuf/empty.proto";
+option go_package="user/api/qvbilam/public/v1;publicV1";
+
+message SendSmsRequest {
+  string mobile = 1;
+  string type = 2;
+  string clientIP = 3;
+}
+
+message CheckSmsRequest{
+  string mobile = 1;
+  string type= 2;
+  string code = 3;
+}
+
+
+service Sms {
+  rpc SendLogin(SendSmsRequest) returns (google.protobuf.Empty);
+  rpc CheckLogin(CheckSmsRequest) returns (google.protobuf.Empty);
+
+  rpc SendLogout(SendSmsRequest) returns (google.protobuf.Empty);
+  rpc CheckLogout(CheckSmsRequest) returns (google.protobuf.Empty);
+
+  rpc SendPassword(SendSmsRequest) returns (google.protobuf.Empty);
+  rpc CheckPassword(CheckSmsRequest) returns (google.protobuf.Empty);
+
+  rpc Send(SendSmsRequest) returns (google.protobuf.Empty);
+  rpc Check(CheckSmsRequest) returns (google.protobuf.Empty);
+}

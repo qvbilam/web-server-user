@@ -25,4 +25,7 @@ go get -u github.com/dgrijalva/jwt-go
 
 # client ip
 go get -u github.com/thinkeridea/go-extend/exnet
+
+# user-agent
+go get -u github.com/mssola/useragent
 ```

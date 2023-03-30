@@ -7,6 +7,7 @@ import (
 
 func Cors() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+
 		method := ctx.Request.Method // 获取请求方式
 
 		ctx.Header("Access-Control-Allow-Origin", "*")

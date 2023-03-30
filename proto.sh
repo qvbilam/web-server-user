@@ -16,3 +16,7 @@ proto page page v1
 # 用户服务
 proto user user v1
 proto user account v1
+# 公共服务
+proto public file v1
+proto public video v1
+proto public sms v1

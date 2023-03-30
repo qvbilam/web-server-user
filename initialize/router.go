@@ -9,7 +9,7 @@ import (
 
 func InitRouters() *gin.Engine {
 	router := gin.Default()
-	router.Use(middleware.Cors())
+	router.Use(middleware.Cors()).Use(middleware.UserAgent())
 	router.GET("ping", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"msg": "pong",

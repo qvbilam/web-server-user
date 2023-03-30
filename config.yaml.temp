@@ -11,3 +11,8 @@ user-server:
   host: "127.0.0.1"
   port: 9801
   name: "grpc-user-server"
+
+public-server:
+  host: "127.0.0.1"
+  port: 9803
+  name: "grpc-public-server"

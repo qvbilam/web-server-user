@@ -7,6 +7,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"time"
+	publicProto "user/api/qvbilam/public/v1"
 	proto "user/api/qvbilam/user/v1"
 	"user/global"
 )
@@ -17,8 +18,8 @@ type dialConfig struct {
 }
 
 type serverClientConfig struct {
-	userDialConfig  *dialConfig
-	videoDialConfig *dialConfig
+	userDialConfig   *dialConfig
+	publicDialConfig *dialConfig
 }
 
 func InitServer() {
@@ -28,9 +29,14 @@ func InitServer() {
 			host: global.ServerConfig.UserServerConfig.Host,
 			port: global.ServerConfig.UserServerConfig.Port,
 		},
+		publicDialConfig: &dialConfig{
+			host: global.ServerConfig.PublicServerConfig.Host,
+			port: global.ServerConfig.PublicServerConfig.Port,
+		},
 	}
 
 	s.initUserServer()
+	s.initPublicServer()
 }
 
 func clientOption() []retry.CallOption {
@@ -59,4 +65,19 @@ func (s *serverClientConfig) initUserServer() {
 
 	global.UserServerClient = userClient
 	global.AccountServerClient = accountClient
+}
+
+func (s *serverClientConfig) initPublicServer() {
+	opts := clientOption()
+
+	conn, err := grpc.Dial(
+		fmt.Sprintf("%s:%d", s.publicDialConfig.host, s.publicDialConfig.port),
+		grpc.WithInsecure(),
+		grpc.WithUnaryInterceptor(retry.UnaryClientInterceptor(opts...)))
+	if err != nil {
+		zap.S().Fatalf("%s dial error: %s", global.ServerConfig.PublicServerConfig.Name, err)
+	}
+
+	smsClient := publicProto.NewSmsClient(conn)
+	global.PublicSmsServerClient = smsClient
 }
