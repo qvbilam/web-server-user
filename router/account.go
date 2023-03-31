@@ -13,7 +13,8 @@ func InitAccountRouter(Router *gin.RouterGroup) {
 		{
 			accountRouter.POST("/register", account.Register)
 			accountRouter.POST("/login", account.Login)
-			accountRouter.POST("/logout", account.Login)
+			accountRouter.POST("/login/platform", account.LoginPlatform)
+			accountRouter.POST("/logout", account.Login).Use(middleware.Auth())
 		}
 	}
 }

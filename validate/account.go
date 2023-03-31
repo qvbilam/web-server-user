@@ -15,3 +15,8 @@ type LoginValidate struct {
 	Password string `form:"password" json:"password" binding:"omitempty,min=6,max=10"`
 	Code     string `form:"code" json:"code" binding:"omitempty,min=4,max=10"`
 }
+
+type LoginPlatformValidate struct {
+	Type string `form:"type" json:"type" binding:"required"`
+	Code string `form:"code" json:"code" binding:"required"`
+}

@@ -9,6 +9,7 @@ import (
 	"user/enum"
 	"user/global"
 	"user/resource"
+	"user/utils"
 	"user/validate"
 )
 
@@ -95,6 +96,33 @@ func Login(ctx *gin.Context) {
 
 	token := entity.Token
 
+	r := resource.LoginResource{}
+	api.SuccessNotMessage(ctx, r.Resource(entity, token))
+}
+
+func LoginPlatform(ctx *gin.Context) {
+	request := validate.LoginPlatformValidate{}
+	if err := ctx.ShouldBind(&request); err != nil {
+		api.HandleValidateError(ctx, err)
+		return
+	}
+
+	allowType := []interface{}{enum.LoginMethodPlatformQQ, enum.LoginMethodPlatformWechat, enum.LoginMethodPlatformWGitHub}
+	if utils.InArray(request.Type, allowType) == false {
+		api.Error(ctx, "参数错误")
+		return
+	}
+
+	entity, err := global.AccountServerClient.LoginPlatform(context.Background(), &proto.LoginPlatformRequest{
+		Type: request.Type,
+		Code: request.Code,
+	})
+	if err != nil {
+		api.HandleGrpcErrorToHttp(ctx, err)
+		return
+	}
+
+	token := entity.Token
 	r := resource.LoginResource{}
 	api.SuccessNotMessage(ctx, r.Resource(entity, token))
 }
