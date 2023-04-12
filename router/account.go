@@ -16,5 +16,10 @@ func InitAccountRouter(Router *gin.RouterGroup) {
 			accountRouter.POST("/login/platform", account.LoginPlatform)
 			accountRouter.POST("/logout", account.Login).Use(middleware.Auth())
 		}
+
+		accountAuthRouter := ServerRouter.Group("").Use(middleware.Cors()).Use(middleware.Auth())
+		{
+			accountAuthRouter.POST("/update", account.Update)
+		}
 	}
 }

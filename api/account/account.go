@@ -126,3 +126,28 @@ func LoginPlatform(ctx *gin.Context) {
 	r := resource.LoginResource{}
 	api.SuccessNotMessage(ctx, r.Resource(entity, token))
 }
+
+func Update(ctx *gin.Context) {
+	uID, _ := ctx.Get("userId")
+	userID := uID.(int64)
+
+	request := validate.UpdateAccountValidate{}
+	if err := ctx.ShouldBind(&request); err != nil {
+		api.HandleValidateError(ctx, err)
+		return
+	}
+
+	if _, err := global.AccountServerClient.Update(context.Background(), &proto.UpdateAccountRequest{
+		UserId:   userID,
+		Username: request.Username,
+		Mobile:   request.Mobile,
+		Email:    request.Email,
+		Password: request.Password,
+		Ip:       api.GetClientIP(ctx),
+	}); err != nil {
+		api.HandleGrpcErrorToHttp(ctx, err)
+		return
+	}
+
+	api.SuccessNotContent(ctx)
+}

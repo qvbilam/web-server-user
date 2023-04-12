@@ -20,3 +20,11 @@ type LoginPlatformValidate struct {
 	Type string `form:"type" json:"type" binding:"required"`
 	Code string `form:"code" json:"code" binding:"required"`
 }
+
+type UpdateAccountValidate struct {
+	Username string `form:"username" json:"username" binding:"omitempty"`
+	Email    string `form:"email" json:"email" binding:"omitempty"`
+	Mobile   string `form:"mobile" json:"mobile" binding:"omitempty"`
+	Password string `form:"password" json:"password" binding:"omitempty"`
+	Code     string `form:"code" json:"code" binding:"omitempty"`
+}

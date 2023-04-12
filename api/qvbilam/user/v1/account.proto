@@ -6,7 +6,7 @@ option go_package="user/api/qvbilam/user/v1/userPb;v1";
 
 message AccountResponse {
   int64 id = 1;
-  string userName = 2;
+  string username = 2;
   string mobile = 3;
   string email = 4;
   string createdIP = 5;
@@ -25,12 +25,14 @@ message UpdateAccountPlatformRequest {
 }
 
 message UpdateAccountRequest {
-  int64 id = 1;
-  string mobile = 2;
-  string email = 3;
-  string password = 4;
-  string ip = 5;
-  UpdateAccountPlatformRequest accountPlatform = 6;
+  int64 id = 1; // 通过账号id 或者 用户id 修改
+  int64 userId = 2;
+  string username = 3;
+  string mobile = 4;
+  string email = 5;
+  string password = 6;
+  string ip = 7;
+  UpdateAccountPlatformRequest accountPlatform = 8;
 }
 
 message DeviceRequest{
@@ -60,12 +62,21 @@ message LoginMobileRequest{
 message LoginPlatformRequest{
   string type = 1;
   string code = 2;
+  string ip = 3;
+}
+
+message BindPlatformRequest{
+  int64 userId = 1;
+  string type = 2;
+  string code = 3;
 }
 
 service Account {
-  rpc Create (UpdateAccountRequest) returns (AccountResponse);
-  rpc Update (UpdateAccountRequest) returns (google.protobuf.Empty);
-  rpc LoginPassword (LoginPasswordRequest) returns (AccountResponse);
-  rpc LoginMobile (LoginMobileRequest) returns (AccountResponse);
-  rpc LoginPlatform(LoginPlatformRequest) returns (AccountResponse);
+  rpc Create (UpdateAccountRequest) returns (AccountResponse); // 创建账号
+  rpc Update (UpdateAccountRequest) returns (google.protobuf.Empty); // 修改账号
+  rpc LoginPassword (LoginPasswordRequest) returns (AccountResponse); // 密码登陆
+  rpc LoginMobile (LoginMobileRequest) returns (AccountResponse); // 手机号登陆
+  rpc LoginPlatform(LoginPlatformRequest) returns (AccountResponse); // 平台登陆
+  rpc BindPlatform(BindPlatformRequest) returns (google.protobuf.Empty); // 绑定平台
+  rpc UnbindPlatform(BindPlatformRequest) returns (google.protobuf.Empty); // 取消绑定平台
 }
