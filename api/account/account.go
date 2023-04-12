@@ -20,11 +20,21 @@ func Register(ctx *gin.Context) {
 		return
 	}
 
+	deviceName, _ := ctx.Get("deviceName")
+	deviceVersion, _ := ctx.Get("deviceVersion")
+	deviceOS, _ := ctx.Get("deviceOS")
+	device := proto.DeviceRequest{
+		Version: deviceVersion.(string),
+		Client:  deviceName.(string),
+		Device:  deviceOS.(string),
+	}
+
 	_, err := global.AccountServerClient.Create(context.Background(), &proto.UpdateAccountRequest{
 		Mobile:   request.Mobile,
 		Email:    request.Email,
 		Password: request.Password,
 		Ip:       api.GetClientIP(ctx),
+		Device:   &device,
 	})
 	if err != nil {
 		api.HandleGrpcErrorToHttp(ctx, err)
