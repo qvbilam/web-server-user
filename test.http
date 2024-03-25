@@ -1,5 +1,5 @@
 ### 用户注册
-POST http://localhost:9501/account/register
+POST {{localHost}}/account/register
 Content-Type: application/json
 
 {
@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ### 用户登陆
-POST http://localhost:9700/account/login
+POST {{localHost}}/account/login
 Content-Type: application/json
 
 {
@@ -20,10 +20,10 @@ Content-Type: application/json
 > {% client.global.set("token", response.body.data.token) %}
 
 ### 获取用户详情
-GET http://localhost:9700/user/1
+GET {{localHost}}/user/1
 Authorization: Bearer {{token}}
 
 
 ### 搜索用户
-GET http://localhost:9702/user/search?keyword=Fate
+GET {{localHost}}/user/search?keyword=Fate
 Authorization: Bearer {{token}}
