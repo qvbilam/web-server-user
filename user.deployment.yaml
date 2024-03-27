@@ -2,25 +2,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-web-server
+  name: web-server-user
   labels:
-    app: user-web-server
+    app: web-server-user
 spec:
   replicas: 1
   strategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      app: user-web-server
+      app: web-server-user
   template:
     metadata:
       labels:
-        app: user-web-server
+        app: web-server-user
         version: v1.0
     spec:
       containers:
         - name: user-server
-          image: registry.cn-hangzhou.aliyuncs.com/qvbilam/user-web-server:1.0.0
+          image: registry.cn-hangzhou.aliyuncs.com/qvbilam/web-server-user:1.0.0
           imagePullPolicy: Always
           ports: # 容器内部使用端口
             - containerPort: 9501
