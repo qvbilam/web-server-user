@@ -3,6 +3,8 @@ package initialize
 import (
 	"fmt"
 	retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
+	"github.com/grpc-ecosystem/grpc-opentracing/go/otgrpc"
+	"github.com/opentracing/opentracing-go"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -55,7 +57,10 @@ func (s *serverClientConfig) initUserServer() {
 	conn, err := grpc.Dial(
 		fmt.Sprintf("%s:%d", s.userDialConfig.host, s.userDialConfig.port),
 		grpc.WithInsecure(),
-		grpc.WithUnaryInterceptor(retry.UnaryClientInterceptor(opts...)))
+		grpc.WithUnaryInterceptor(retry.UnaryClientInterceptor(opts...)),
+		// 链路追踪
+		grpc.WithUnaryInterceptor(otgrpc.OpenTracingClientInterceptor(opentracing.GlobalTracer())),
+	)
 	if err != nil {
 		zap.S().Fatalf("%s dial error: %s", global.ServerConfig.UserServerConfig.Name, err)
 	}
@@ -73,7 +78,10 @@ func (s *serverClientConfig) initPublicServer() {
 	conn, err := grpc.Dial(
 		fmt.Sprintf("%s:%d", s.publicDialConfig.host, s.publicDialConfig.port),
 		grpc.WithInsecure(),
-		grpc.WithUnaryInterceptor(retry.UnaryClientInterceptor(opts...)))
+		grpc.WithUnaryInterceptor(retry.UnaryClientInterceptor(opts...)),
+		// 链路追踪
+		grpc.WithUnaryInterceptor(otgrpc.OpenTracingClientInterceptor(opentracing.GlobalTracer())),
+	)
 	if err != nil {
 		zap.S().Fatalf("%s dial error: %s", global.ServerConfig.PublicServerConfig.Name, err)
 	}

@@ -19,6 +19,10 @@ func initEnvConfig() {
 	serverPort, _ := strconv.Atoi(os.Getenv("PORT"))
 	jwtExpire, _ := strconv.Atoi(os.Getenv("JWT_EXPIRE"))
 	userServerPort, _ := strconv.Atoi(os.Getenv("USER-SERVER_PORT"))
+	jaegerOutput := os.Getenv("JAEGER_OUTPUT")
+	jaegerIsLog := os.Getenv("JAEGER_IS_LOG")
+	jaegerOutputInt, _ := strconv.Atoi(jaegerOutput)
+	jaegerOutputIsLog, _ := strconv.ParseBool(jaegerIsLog)
 
 	if global.ServerConfig == nil {
 		global.ServerConfig = &config.ServerConfig{}
@@ -35,6 +39,11 @@ func initEnvConfig() {
 	global.ServerConfig.UserServerConfig.Name = os.Getenv("USER-SERVER_HOST")
 	global.ServerConfig.UserServerConfig.Host = os.Getenv("USER-SERVER_NAME")
 	global.ServerConfig.UserServerConfig.Port = int64(userServerPort)
+
+	global.ServerConfig.JaegerConfig.Host = os.Getenv("JAEGER_HOST")
+	global.ServerConfig.JaegerConfig.Port = os.Getenv("JAEGER_PORT")
+	global.ServerConfig.JaegerConfig.Output = int64(jaegerOutputInt)
+	global.ServerConfig.JaegerConfig.IsLog = jaegerOutputIsLog
 }
 
 // initViperConfig 初始化配置 > viper 配置包

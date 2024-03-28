@@ -8,6 +8,7 @@ type ServerConfig struct {
 	JWTConfig          JWTConfig          `mapstructure:"jwt" json:"jwt"`
 	UserServerConfig   UserServerConfig   `mapstructure:"user-server" json:"user-server"`
 	PublicServerConfig PublicServerConfig `mapstructure:"public-server" json:"public-server"`
+	JaegerConfig       JaegerConfig       `mapstructure:"jaeger" json:"jaeger"`
 }
 
 type JWTConfig struct {
@@ -26,4 +27,11 @@ type PublicServerConfig struct {
 	Host string `mapstructure:"host" json:"host"`
 	Port int64  `mapstructure:"port" json:"port"`
 	Name string `mapstructure:"name" json:"name"`
+}
+
+type JaegerConfig struct {
+	Host   string `mapstructure:"host" json:"host"`
+	Port   string `mapstructure:"port" json:"port"`
+	Output int64  `mapstructure:"output" json:"output"`
+	IsLog  bool   `mapstructure:"is_log" json:"is_log"`
 }

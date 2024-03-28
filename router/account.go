@@ -9,7 +9,7 @@ import (
 func InitAccountRouter(Router *gin.RouterGroup) {
 	ServerRouter := Router.Group("account")
 	{
-		accountRouter := ServerRouter.Group("").Use(middleware.Cors())
+		accountRouter := ServerRouter.Group("").Use(middleware.Cors()).Use(middleware.Trace())
 		{
 			accountRouter.POST("/register", account.Register)
 			accountRouter.POST("/login", account.Login)
@@ -17,7 +17,7 @@ func InitAccountRouter(Router *gin.RouterGroup) {
 			accountRouter.POST("/logout", account.Login).Use(middleware.Auth())
 		}
 
-		accountAuthRouter := ServerRouter.Group("").Use(middleware.Cors()).Use(middleware.Auth())
+		accountAuthRouter := ServerRouter.Group("").Use(middleware.Cors()).Use(middleware.Auth()).Use(middleware.Trace())
 		{
 			accountAuthRouter.POST("/update", account.Update)
 		}

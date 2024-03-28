@@ -24,7 +24,7 @@ func Update(ctx *gin.Context) {
 
 	client := global.UserServerClient
 
-	_, err := client.Update(context.Background(), &proto.UpdateRequest{
+	_, err := client.Update(context.WithValue(context.Background(), "ginContext", ctx), &proto.UpdateRequest{
 		Id:       userID,
 		Nickname: request.Nickname,
 		Gender:   request.Gender,
@@ -45,7 +45,7 @@ func Detail(ctx *gin.Context) {
 
 	client := global.UserServerClient
 
-	entity, err := client.Detail(context.Background(), &proto.GetUserRequest{
+	entity, err := client.Detail(context.WithValue(context.Background(), "ginContext", ctx), &proto.GetUserRequest{
 		Id: int64(userId),
 	})
 	if err != nil {
@@ -72,7 +72,7 @@ func Search(ctx *gin.Context) {
 	}
 
 	client := global.UserServerClient
-	res, err := client.Search(context.Background(), &proto.SearchRequest{
+	res, err := client.Search(context.WithValue(context.Background(), "ginContext", ctx), &proto.SearchRequest{
 		Keyword: request.Keyword,
 		Sort:    request.Sort,
 		Page: &pageProto.PageRequest{

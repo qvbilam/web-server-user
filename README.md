@@ -28,4 +28,8 @@ go get -u github.com/thinkeridea/go-extend/exnet
 
 # user-agent
 go get -u github.com/mssola/useragent
+
+# jaeger 链路追踪
+go get github.com/uber/jaeger-client-go
+go get -u github.com/grpc-ecosystem/grpc-opentracing/go/otgrpc
 ```

@@ -9,7 +9,7 @@ import (
 func InitUserRouter(Router *gin.RouterGroup) {
 	ServerRouter := Router.Group("user")
 	{
-		userAuthRouter := ServerRouter.Group("").Use(middleware.Cors()).Use(middleware.Auth())
+		userAuthRouter := ServerRouter.Group("").Use(middleware.Cors()).Use(middleware.Auth()).Use(middleware.Trace())
 		{
 			userAuthRouter.GET("", user.Search) // todo
 			userAuthRouter.GET("/search", user.Search)
