@@ -18,7 +18,8 @@ func InitConfig() {
 func initEnvConfig() {
 	serverPort, _ := strconv.Atoi(os.Getenv("PORT"))
 	jwtExpire, _ := strconv.Atoi(os.Getenv("JWT_EXPIRE"))
-	userServerPort, _ := strconv.Atoi(os.Getenv("USER-SERVER_PORT"))
+	userServerPort, _ := strconv.Atoi(os.Getenv("USER_SERVER_PORT"))
+	publicServerPort, _ := strconv.Atoi(os.Getenv("PUBLIC_SERVER_PORT"))
 	jaegerOutput := os.Getenv("JAEGER_OUTPUT")
 	jaegerIsLog := os.Getenv("JAEGER_IS_LOG")
 	jaegerOutputInt, _ := strconv.Atoi(jaegerOutput)
@@ -36,9 +37,13 @@ func initEnvConfig() {
 	global.ServerConfig.JWTConfig.Issuer = os.Getenv("JWT_ISSUER")
 	global.ServerConfig.JWTConfig.Expire = int64(jwtExpire)
 
-	global.ServerConfig.UserServerConfig.Name = os.Getenv("USER-SERVER_HOST")
-	global.ServerConfig.UserServerConfig.Host = os.Getenv("USER-SERVER_NAME")
+	global.ServerConfig.UserServerConfig.Name = os.Getenv("USER_SERVER_HOST")
+	global.ServerConfig.UserServerConfig.Host = os.Getenv("USER_SERVER_NAME")
 	global.ServerConfig.UserServerConfig.Port = int64(userServerPort)
+
+	global.ServerConfig.PublicServerConfig.Name = os.Getenv("PUBLIC_SERVER_HOST")
+	global.ServerConfig.PublicServerConfig.Host = os.Getenv("PUBLIC_SERVER_NAME")
+	global.ServerConfig.PublicServerConfig.Port = int64(publicServerPort)
 
 	global.ServerConfig.JaegerConfig.Host = os.Getenv("JAEGER_HOST")
 	global.ServerConfig.JaegerConfig.Port = os.Getenv("JAEGER_PORT")

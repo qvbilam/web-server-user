@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-server-user
+  name: message-web-server
 spec:
   selector:
-    app: web-server-user
+    app: message-web
   ports:
-    - name: web-server-user
+    - name: http-server-message
       protocol: TCP
-      port: 9701
+      port: 9704
       targetPort: 9501
   type: NodePort

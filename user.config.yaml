@@ -6,16 +6,13 @@ metadata:
     app: user-web
 data:
   # 服务配置
-  server_name: "web-server-user"
+  server_name: "user-web"
   server_host: "0.0.0.0"
-  port: "9501"
-
-  # jwt 配置
-  jwt_key: "Ep<4Iy#2Im~4Ab^8Px;6Oj.5Hi^8Yh)6"
-  jwt_expire: "86400"
-  jwt_issuer: "qvbilam-user"
-
   # user-server 配置
-  user-server_name: "api-server-user"
-  user-server_host: "api-server-user"
-  user-server_port: "9801"
+  user_server_name: "user-server"
+  user_server_host: "user-server"
+  user_server_port: "9801"
+  # public-server 配置
+  public_server_name: "public-server"
+  public_server_host: "public-server"
+  public_server_port: "9803"

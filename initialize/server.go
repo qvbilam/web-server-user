@@ -70,6 +70,7 @@ func (s *serverClientConfig) initUserServer() {
 
 	global.UserServerClient = userClient
 	global.AccountServerClient = accountClient
+	fmt.Printf("grpc server: %s[%s:%d]\n", global.ServerConfig.UserServerConfig.Name, global.ServerConfig.UserServerConfig.Host, global.ServerConfig.UserServerConfig.Port)
 }
 
 func (s *serverClientConfig) initPublicServer() {
@@ -88,4 +89,5 @@ func (s *serverClientConfig) initPublicServer() {
 
 	smsClient := publicProto.NewSmsClient(conn)
 	global.PublicSmsServerClient = smsClient
+	fmt.Printf("grpc server: %s[%s:%d]\n", global.ServerConfig.PublicServerConfig.Name, global.ServerConfig.PublicServerConfig.Host, global.ServerConfig.PublicServerConfig.Port)
 }
