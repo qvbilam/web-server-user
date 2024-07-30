@@ -1,0 +1,89 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: mysql
+spec:
+  hosts:
+    - server-mysql.qvbilam.xin
+  addresses:
+    - 82.157.232.70
+  ports:
+    - number: 3306
+      name: mysql
+      protocol: TCP
+  location: MESH_EXTERNAL
+  resolution: DNS
+
+---
+# redis
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: redis
+spec:
+  hosts:
+    - server-redis.qvbilam.xin
+  addresses:
+    - 82.157.232.70
+  ports:
+    - number: 6379
+      name: redis
+      protocol: TCP
+  location: MESH_EXTERNAL
+  resolution: DNS
+
+---
+# rabbitMQ
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: rabbitmq
+spec:
+  hosts:
+    - server-rabbitmq.qvbilam.xin
+  addresses:
+    - 82.157.232.70
+  ports:
+    - number: 5672
+      name: rabbitmq
+      protocol: TCP
+  location: MESH_EXTERNAL
+  resolution: DNS
+
+---
+# elasticsearch
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: elasticsearch
+spec:
+  hosts:
+    - server-elasticsearch.qvbilam.xin
+  addresses:
+    - 82.157.232.70
+  ports:
+    - number: 9200
+      name: elasticSearch
+      protocol: TCP
+  location: MESH_EXTERNAL
+  resolution: DNS
+
+---
+# jaeger
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: jaeger
+spec:
+  hosts:
+    - server-jaeger.qvbilam.xin
+  addresses:
+    - 82.157.232.70
+  ports:
+    - number: 6831
+      name: jaeger
+      protocol: TCP
+  location: MESH_EXTERNAL
+  resolution: DNS
+
+

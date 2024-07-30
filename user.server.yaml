@@ -1,13 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: message-web-server
+  name: user-web-server
+  labels:
+    app: qvbilam-http
 spec:
   selector:
-    app: message-web
+    app: user-web
   ports:
-    - name: http-server-message
+    - name: http-server-user
       protocol: TCP
-      port: 9704
+      port: 9701
       targetPort: 9501
   type: NodePort
