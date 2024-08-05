@@ -15,6 +15,11 @@ func InitRouters() *gin.Engine {
 			"msg": "pong",
 		})
 	})
+	router.GET("version", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, gin.H{
+			"msg": "v1.0.0",
+		})
+	})
 	apiRouter := router.Group("")
 
 	// 初始化基础组建路由
