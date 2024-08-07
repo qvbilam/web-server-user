@@ -1,0 +1,73 @@
+# user.deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-web-v1-1
+  labels:
+    app: user-web
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: user-web
+  template:
+    metadata:
+      labels:
+        app: user-web
+        version: v1.1
+    spec:
+      containers:
+        - name: user-web
+          image: registry.cn-hangzhou.aliyuncs.com/qvbilam/web-server-user:1.1
+          imagePullPolicy: Always
+          ports: # 容器内部使用端口
+            - containerPort: 9501
+          env:
+            # 服务配置
+            - name: SERVER_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: server_name
+                  name: user-web
+
+            # jwt 配置
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: jwt_key
+                  name: user-web
+            - name: JWT_EXPIRE
+              valueFrom:
+                secretKeyRef:
+                  key: jwt_expire
+                  name: user-web
+            - name: JWT_ISSUER
+              valueFrom:
+                secretKeyRef:
+                  key: jwt_issuer
+                  name: user-web
+
+            # user-server 配置
+            - name: USER_SERVER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: user_server_host
+                  name: user-web
+            - name: USER_SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: user_server_port
+                  name: user-web
+            - name: USER_SERVER_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: user_server_name
+                  name: user-web
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+      imagePullSecrets:
+        - name: ali-image-key

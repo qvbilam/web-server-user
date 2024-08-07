@@ -21,7 +21,7 @@ func InitUserRouter(Router *gin.RouterGroup) {
 			})
 			baseRouter.GET("version", func(ctx *gin.Context) {
 				ctx.JSON(http.StatusOK, gin.H{
-					"msg": "v1.0.0",
+					"msg": "v1.1.0",
 				})
 			})
 		}
