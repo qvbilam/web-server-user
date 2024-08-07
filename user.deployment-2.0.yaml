@@ -16,11 +16,11 @@ spec:
     metadata:
       labels:
         app: user-web
-        version: v1.1
+        version: v2.0
     spec:
       containers:
         - name: user-web
-          image: registry.cn-hangzhou.aliyuncs.com/qvbilam/web-server-user:1.1
+          image: registry.cn-hangzhou.aliyuncs.com/qvbilam/web-server-user:2.0
           imagePullPolicy: Always
           ports: # 容器内部使用端口
             - containerPort: 9501
