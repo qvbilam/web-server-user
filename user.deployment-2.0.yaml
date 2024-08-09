@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-web-v1-1
+  name: user-web-v2
   labels:
     app: user-web
 spec:
