@@ -3,6 +3,7 @@ package account
 import (
 	"context"
 	"github.com/gin-gonic/gin"
+	"github.com/opentracing/opentracing-go"
 	"user/api"
 	publicProto "user/api/qvbilam/public/v1"
 	proto "user/api/qvbilam/user/v1"
@@ -14,11 +15,21 @@ import (
 )
 
 func Register(ctx *gin.Context) {
+	// 获取全局span
+	globalSpan, _ := ctx.Get("span")
+	parentSpan := globalSpan.(opentracing.Span)
+	opentracing.ContextWithSpan(context.Background(), parentSpan.(opentracing.Span))
+	// 将span 注入到 gin.Context 中
+	context.WithValue(context.Background(), "ginContext", ctx)
+
+	validateParamsSpan := opentracing.GlobalTracer().StartSpan("startValidateParams", opentracing.ChildOf(parentSpan.Context()))
 	request := validate.CreateValidate{}
 	if err := ctx.Bind(&request); err != nil {
 		api.HandleValidateError(ctx, err)
+		validateParamsSpan.Finish()
 		return
 	}
+	validateParamsSpan.Finish()
 
 	deviceName, _ := ctx.Get("deviceName")
 	deviceVersion, _ := ctx.Get("deviceVersion")
@@ -29,13 +40,15 @@ func Register(ctx *gin.Context) {
 		Device:  deviceOS.(string),
 	}
 
-	_, err := global.AccountServerClient.Create(context.Background(), &proto.UpdateAccountRequest{
+	sentUserServerSpan := opentracing.GlobalTracer().StartSpan("sentUserServer", opentracing.ChildOf(parentSpan.Context()))
+	_, err := global.AccountServerClient.Create(ctx, &proto.UpdateAccountRequest{
 		Mobile:   request.Mobile,
 		Email:    request.Email,
 		Password: request.Password,
 		Ip:       api.GetClientIP(ctx),
 		Device:   &device,
 	})
+	sentUserServerSpan.Finish()
 	if err != nil {
 		api.HandleGrpcErrorToHttp(ctx, err)
 		return
