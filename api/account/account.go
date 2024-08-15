@@ -19,8 +19,6 @@ func Register(ctx *gin.Context) {
 	globalSpan, _ := ctx.Get("span")
 	parentSpan := globalSpan.(opentracing.Span)
 	opentracing.ContextWithSpan(context.Background(), parentSpan.(opentracing.Span))
-	// 将span 注入到 gin.Context 中
-	context.WithValue(context.Background(), "ginContext", ctx)
 
 	validateParamsSpan := opentracing.GlobalTracer().StartSpan("startValidateParams", opentracing.ChildOf(parentSpan.Context()))
 	request := validate.CreateValidate{}
@@ -41,7 +39,7 @@ func Register(ctx *gin.Context) {
 	}
 
 	sentUserServerSpan := opentracing.GlobalTracer().StartSpan("sentUserServer", opentracing.ChildOf(parentSpan.Context()))
-	_, err := global.AccountServerClient.Create(ctx, &proto.UpdateAccountRequest{
+	_, err := global.AccountServerClient.Create(context.WithValue(context.Background(), "ginContext", ctx), &proto.UpdateAccountRequest{
 		Mobile:   request.Mobile,
 		Email:    request.Email,
 		Password: request.Password,
