@@ -38,8 +38,11 @@ func Register(ctx *gin.Context) {
 		Device:  deviceOS.(string),
 	}
 
+	userCtx := context.Background()
+	context.WithValue(userCtx, "ginContext", ctx)
+	context.WithValue(userCtx, "test", "test")
 	sentUserServerSpan := opentracing.GlobalTracer().StartSpan("sentUserServer", opentracing.ChildOf(parentSpan.Context()))
-	_, err := global.AccountServerClient.Create(context.WithValue(context.Background(), "ginContext", ctx), &proto.UpdateAccountRequest{
+	_, err := global.AccountServerClient.Create(userCtx, &proto.UpdateAccountRequest{
 		Mobile:   request.Mobile,
 		Email:    request.Email,
 		Password: request.Password,
