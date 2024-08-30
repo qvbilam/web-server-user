@@ -22,7 +22,7 @@ func Trace() gin.HandlerFunc {
 				LogSpans:           global.ServerConfig.JaegerConfig.IsLog, // 是否打印日志
 				LocalAgentHostPort: fmt.Sprintf("%s:%s", global.ServerConfig.JaegerConfig.Host, global.ServerConfig.JaegerConfig.Port),
 			},
-			ServiceName: global.ServerConfig.Name,
+			ServiceName: global.ServerConfig.JaegerConfig.Server,
 		}
 		// 生成链路Tracer
 		tracer, closer, err := cfg.NewTracer(config.Logger(jaeger.StdLogger))

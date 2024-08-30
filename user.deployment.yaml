@@ -65,6 +65,33 @@ spec:
                 configMapKeyRef:
                   key: user_server_name
                   name: user-web
+
+            # jaeger
+            - name: JAEGER_SERVER
+              valueFrom:
+                secretKeyRef:
+                  key: jaeger_server
+                  name: user-web
+            - name: JAEGER_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: jaeger_host
+                  name: user-web
+            - name: JAEGER_PORT
+              valueFrom:
+                secretKeyRef:
+                  key: jaeger_port
+                  name: user-web
+            - name: JAEGER_IS_LOG
+              valueFrom:
+                secretKeyRef:
+                  key: jaeger_is_log
+                  name: user-web
+            - name: JAEGER_OUTPUT
+              valueFrom:
+                secretKeyRef:
+                  key: jaeger_output
+                  name: user-web
           resources:
             limits:
               cpu: 100m

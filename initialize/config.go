@@ -45,6 +45,7 @@ func initEnvConfig() {
 	global.ServerConfig.PublicServerConfig.Host = os.Getenv("PUBLIC_SERVER_NAME")
 	global.ServerConfig.PublicServerConfig.Port = int64(publicServerPort)
 
+	global.ServerConfig.JaegerConfig.Server = os.Getenv("JAEGER_SERVER")
 	global.ServerConfig.JaegerConfig.Host = os.Getenv("JAEGER_HOST")
 	global.ServerConfig.JaegerConfig.Port = os.Getenv("JAEGER_PORT")
 	global.ServerConfig.JaegerConfig.Output = int64(jaegerOutputInt)

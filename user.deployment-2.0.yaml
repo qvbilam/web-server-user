@@ -67,6 +67,11 @@ spec:
                   name: user-web
 
             # jaeger
+            - name: JAEGER_SERVER
+              valueFrom:
+                secretKeyRef:
+                  key: jaeger_server
+                  name: user-web
             - name: JAEGER_HOST
               valueFrom:
                 secretKeyRef:

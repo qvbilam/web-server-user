@@ -1,5 +1,5 @@
 ### 用户注册
-POST {{localHost}}/account/register
+POST {{localHost}}/user/account/register
 Content-Type: application/json
 
 {
