@@ -12,6 +12,7 @@ import (
 	publicProto "user/api/qvbilam/public/v1"
 	proto "user/api/qvbilam/user/v1"
 	"user/global"
+	"user/utils"
 )
 
 type dialConfig struct {
@@ -59,7 +60,8 @@ func (s *serverClientConfig) initUserServer() {
 		grpc.WithInsecure(),
 		grpc.WithUnaryInterceptor(retry.UnaryClientInterceptor(opts...)),
 		// 链路追踪
-		grpc.WithUnaryInterceptor(otgrpc.OpenTracingClientInterceptor(opentracing.GlobalTracer())),
+		//grpc.WithUnaryInterceptor(otgrpc.OpenTracingClientInterceptor(opentracing.GlobalTracer())),
+		grpc.WithUnaryInterceptor(utils.ClientInterceptor(opentracing.GlobalTracer())),
 	)
 	if err != nil {
 		zap.S().Fatalf("%s dial error: %s", global.ServerConfig.UserServerConfig.Name, err)
